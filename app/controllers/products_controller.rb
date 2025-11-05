@@ -1,4 +1,4 @@
-class ProductController < ApplicationController
+class ProductsController < ApplicationController
   allow_unauthenticated_access only: %i[ index show]
 
   def index
@@ -6,7 +6,7 @@ class ProductController < ApplicationController
   end
 
   def show
-    @product = Products.find(params[:id])
+    @product = Product.find(params[:id])
   end
 
   def new
@@ -23,11 +23,11 @@ class ProductController < ApplicationController
   end
 
   def edit
-    @product = Products.find(params[:id])
+    @product = Product.find(params[:id])
   end
 
   def update
-    @product = Products.find(params[:id])
+    @product = Product.find(params[:id])
     if @product.update(product_params)
       redirect_to @product
     else
@@ -48,6 +48,6 @@ class ProductController < ApplicationController
 
   private
     def product_params
-      parmas.expect(product: [ :name ])
+      params.require(:product).permit(:name)
     end
 end
